@@ -1,0 +1,15 @@
+@import 'base.scss';
+
+html {
+  width: 100vw;
+  height: 100vh;
+  font-family: $fontFamily;
+}
+
+body {
+  background-color: $backgroundColor;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css?family=Share:400,400i,700,700i&display=swap&subset=latin-ext");
+html {
+  width: 100vw;
+  height: 100vh;
+  font-family: "Share", cursive;
+}
+
+body {
+  background-color: green;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/*# sourceMappingURL=style.css.map */
