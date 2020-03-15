@@ -13,4 +13,38 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
+
+#track {
+  background-color: #dad3c7;
+  width: 100%;
+  height: 80vh;
+  padding: 1rem;
+}
+
+.racer {
+  position: relative;
+  margin: 1rem 1rem;
+  width: 9rem;
+  height: 3rem;
+  border-left: 7rem solid;
+  border-top: 1.5rem solid #dad3c7;
+}
+
+.racer::before, .racer::after {
+  position: absolute;
+  top: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: black;
+  content: "";
+}
+
+.racer::after {
+  right: 6rem;
+}
+
+.racer::before {
+  right: 1rem;
+}
 /*# sourceMappingURL=style.css.map */
