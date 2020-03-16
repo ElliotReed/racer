@@ -2,8 +2,11 @@ const track = document.getElementById('race-track');
 const startButton = document.getElementById('start-button');
 const trackWidth = track.offsetWidth;
 const trackPadding = parseFloat(window.getComputedStyle(track, null).getPropertyValue('padding-left')) * 2;
-let numberOfRacers = 10;
 const resetButton = document.getElementById('reset-button');
+const allRacers = [];
+const finishedRacers = [];
+let numberOfRacers = 10;
+let winner = null;
 
 class Racer {
 	constructor(name) {
@@ -13,6 +16,8 @@ class Racer {
 		this.startSkill = Math.floor(Math.random() * 3);
 		this.buildRacer();
 		allRacers.push(this);
+		this.startTime;
+		this.finishTime;
 	}
 
 	buildRacer() {
@@ -50,6 +55,8 @@ class Racer {
 		function frame() {
 			if (position === trackWidth - racer.offsetWidth - trackPadding) {
 				clearInterval(interval);
+				this.finishTime = Date.now();
+				finishedRacers.push(this);
 			} else {
 				position++;
 				racer.style.left = position + 'px';
@@ -58,15 +65,12 @@ class Racer {
 	}
 }
 
-const allRacers = [];
 
 function createRacers(numberOfRacers) {
 	for (let i = 0; i < numberOfRacers; i++) {
 		new Racer(i);
 	}
 }
-
-console.log(allRacers);
 
 function startRace() {
 	for (let i = 0; i < allRacers.length; i++) {
