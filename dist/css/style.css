@@ -182,4 +182,16 @@ header {
 #start-button:hover, #reset-button:hover {
   cursor: pointer;
 }
+
+#results-container {
+  position: absolute;
+  height: 50vh;
+  width: 50vh;
+  top: 50%;
+  background-color: grey;
+}
+
+#results span {
+  margin-right: 1rem;
+}
 /*# sourceMappingURL=style.css.map */

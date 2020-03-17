@@ -3,9 +3,10 @@ const startButton = document.getElementById('start-button');
 const trackWidth = track.offsetWidth;
 const trackPadding = parseFloat(window.getComputedStyle(track, null).getPropertyValue('padding-left')) * 2;
 const resetButton = document.getElementById('reset-button');
+const resultsList = document.getElementById('results');
 const allRacers = [];
 const finishedRacers = [];
-let numberOfRacers = 10;
+let numberOfRacers = 7;
 let winner = null;
 
 class Racer {
@@ -51,12 +52,13 @@ class Racer {
 	move() {
 		const racer = document.getElementById(this.name);
 		let position = this.startSkill;
+		const thisRacer = this;
 		const interval = setInterval(frame, 5 + this.speed);
 		function frame() {
 			if (position === trackWidth - racer.offsetWidth - trackPadding) {
 				clearInterval(interval);
-				this.finishTime = Date.now();
-				finishedRacers.push(this);
+				thisRacer.finishTime = Date.now();
+				finishRace(thisRacer);
 			} else {
 				position++;
 				racer.style.left = position + 'px';
@@ -64,7 +66,6 @@ class Racer {
 		}
 	}
 }
-
 
 function createRacers(numberOfRacers) {
 	for (let i = 0; i < numberOfRacers; i++) {
@@ -74,19 +75,56 @@ function createRacers(numberOfRacers) {
 
 function startRace() {
 	for (let i = 0; i < allRacers.length; i++) {
+		allRacers[i].startTime = Date.now();
 		allRacers[i].move();
 	}
 }
 
-createRacers(numberOfRacers);
+function finishRace(racer) {
+	finishedRacers.push(racer);
+	if (finishedRacers.length === allRacers.length) {
+		finishedRacers.sort(function(a, b) {
+			const raceTimeA = a.finishTime - a.startTime;
+			const raceTimeB = b.finishTime - b.startTime;
+			console.log(raceTimeA);
+			return raceTimeA - raceTimeB;
+		});
+		displayRaceResults();
+	}
+}
+
+function displayRaceResults() {
+	for (let i = 0; i < finishedRacers.length; i++) {
+		const resultItem = document.createElement('tr');
+		const result = document.createElement('td');
+		const place = document.createElement('td');
+		const time = document.createElement('td');
+
+		result.innerText = finishedRacers[i].name;
+		place.innerText = i + 1;
+		time.innerText = finishedRacers[i].finishTime - finishedRacers[i].startTime;
+		resultItem.append(place);
+		resultItem.append(result);
+		resultItem.append(time);
+		resultsList.append(resultItem);
+	}
+}
 
 function reset() {
 	while (track.firstChild) {
 		track.removeChild(track.lastChild);
 	}
+
+	while (resultsList.firstChild) {
+		resultsList.removeChild(resultsList.lastChild);
+	}
+
 	allRacers.splice(0, allRacers.length);
+	finishedRacers.splice(0, finishedRacers.length);
 	createRacers(numberOfRacers);
 }
+
+createRacers(numberOfRacers);
 
 startButton.addEventListener('click', startRace);
 resetButton.addEventListener('click', reset);
