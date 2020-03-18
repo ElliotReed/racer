@@ -218,9 +218,11 @@ header {
   outline: none;
   background-color: transparent;
   border: none;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 #button-container button:hover {
+  color: black;
   cursor: pointer;
 }
 

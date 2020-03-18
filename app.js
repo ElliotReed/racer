@@ -2,7 +2,6 @@ const track = document.getElementById('race-track');
 const startButton = document.getElementById('start-button');
 const trackWidth = track.offsetWidth;
 const trackPadding = parseFloat(window.getComputedStyle(track, null).getPropertyValue('padding-left')) * 2;
-const resetButton = document.getElementById('reset-button');
 const resultsList = document.getElementById('results');
 const closeButton = document.getElementById('close-button');
 const modal = document.querySelector('.modal');
@@ -16,7 +15,7 @@ class Racer {
 	constructor(name) {
 		this.name = name + 1;
 		this.color = '#' + Math.floor(Math.random() * 16777215).toString(16);
-		this.speed = Math.floor(Math.random() * 4);
+		this.speed = Math.floor(Math.random() * 5);
 		this.startSkill = Math.floor(Math.random() * 3);
 		this.engine = Math.floor(Math.random() * 2);
 		this.buildRacer();
@@ -55,29 +54,51 @@ class Racer {
 
 	move() {
 		const racer = document.getElementById(this.name);
-		let position = this.startSkill;
 		const thisRacer = this;
-		let engineTrigger = true;
-		const interval = setInterval(frame, 5 + this.speed);
-		function frame() {
-			if (position === trackWidth - racer.offsetWidth - trackPadding) {
-				clearInterval(interval);
-				thisRacer.finishTime = Date.now();
-				finishRace(thisRacer);
-			} else {
-				if (position % 100 === 0 && engineTrigger === true) {
-					if (thisRacer.engine === 0) {
-						console.log('engine is 0');
-						position = position - 4;
-						engineTrigger = false;
-					} else {
-						console.log(`engine is ${thisRacer.engine}`);
-					}
+		let position = this.startSkill;
+		let timeoutID;
+		let baseTime = 5;
+
+		function timeoutCaller() {
+			timeoutID = setTimeout(loop, Math.max(baseTime - parseInt(thisRacer.speed, 10), 0));
+		}
+
+		function callFinishers() {
+			clearTimeout(timeoutID);
+			thisRacer.finishTime = Date.now();
+			finishRace(thisRacer);
+		}
+
+		function checkEngineStatus() {
+			if (thisRacer.engine === 0) {
+				if (Math.floor(Math.random() * 2) === 1) {
+					thisRacer.engine = 1;
+					thisRacer.speed = 0;
 				}
+				thisRacer.speed--;
+			} else if (thisRacer.engine === 1) {
+				if (Math.floor(Math.random() * 4) === 0) {
+					thisRacer.engine = 0;
+				}
+				thisRacer.speed++;
 				position++;
-				racer.style.left = position + 'px';
 			}
 		}
+
+		function loop() {
+			position++;
+			racer.style.left = position + 'px';
+			if (position === trackWidth - racer.offsetWidth - trackPadding) {
+				callFinishers();
+				return;
+			} else {
+				if (position % 63 === 0) {
+					checkEngineStatus();
+				}
+			}
+			timeoutCaller();
+		}
+		loop();
 	}
 }
 
@@ -144,5 +165,4 @@ function reset() {
 createRacers(numberOfRacers);
 
 startButton.addEventListener('click', startRace);
-resetButton.addEventListener('click', reset);
 closeButton.addEventListener('click', reset);
