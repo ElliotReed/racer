@@ -14,6 +14,10 @@ body {
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 #grid-container {
@@ -171,7 +175,8 @@ header {
   border: 2px solid;
 }
 
-#start-button, #reset-button {
+#start-button,
+#reset-button {
   margin: 0 0.5rem 0.5rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
@@ -179,7 +184,92 @@ header {
   background-color: white;
 }
 
-#start-button:hover, #reset-button:hover {
+#start-button:hover,
+#reset-button:hover {
   cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -100%;
+  background-color: white;
+  -webkit-transition: top 600ms;
+  transition: top 600ms;
+}
+
+.show-modal {
+  top: 0;
+}
+
+#button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+#button-container button {
+  margin: 1rem;
+  font-size: 2rem;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#button-container button:hover {
+  color: black;
+  cursor: pointer;
+}
+
+#results-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#results-container table {
+  margin: 1rem;
+  width: 100%;
+  max-width: 50rem;
+  font-size: 1.5rem;
+  border-collapse: collapse;
+}
+
+#results-container table caption {
+  font-size: 1rem;
+  margin: 1rem;
+}
+
+#results-container table thead {
+  background-color: green;
+  color: white;
+  font-size: 2rem;
+}
+
+#results-container table thead tr {
+  height: 5rem;
+}
+
+#results-container table tbody tr:hover {
+  background-color: rgba(0, 128, 0, 0.5);
+  color: white;
+}
+
+#results-container table tbody td {
+  padding: 1rem;
+  border-bottom: 3px solid black;
+  text-align: center;
+}
+
+#results span {
+  margin-right: 1rem;
 }
 /*# sourceMappingURL=style.css.map */
