@@ -4,6 +4,9 @@ const trackWidth = track.offsetWidth;
 const trackPadding = parseFloat(window.getComputedStyle(track, null).getPropertyValue('padding-left')) * 2;
 const resetButton = document.getElementById('reset-button');
 const resultsList = document.getElementById('results');
+const closeButton = document.getElementById('close-button');
+const modal = document.querySelector('.modal');
+
 const allRacers = [];
 const finishedRacers = [];
 let numberOfRacers = 7;
@@ -13,8 +16,9 @@ class Racer {
 	constructor(name) {
 		this.name = name + 1;
 		this.color = '#' + Math.floor(Math.random() * 16777215).toString(16);
-		this.speed = Math.floor(Math.random() * 6);
+		this.speed = Math.floor(Math.random() * 4);
 		this.startSkill = Math.floor(Math.random() * 3);
+		this.engine = Math.floor(Math.random() * 2);
 		this.buildRacer();
 		allRacers.push(this);
 		this.startTime;
@@ -53,6 +57,7 @@ class Racer {
 		const racer = document.getElementById(this.name);
 		let position = this.startSkill;
 		const thisRacer = this;
+		let engineTrigger = true;
 		const interval = setInterval(frame, 5 + this.speed);
 		function frame() {
 			if (position === trackWidth - racer.offsetWidth - trackPadding) {
@@ -60,6 +65,15 @@ class Racer {
 				thisRacer.finishTime = Date.now();
 				finishRace(thisRacer);
 			} else {
+				if (position % 100 === 0 && engineTrigger === true) {
+					if (thisRacer.engine === 0) {
+						console.log('engine is 0');
+						position = position - 4;
+						engineTrigger = false;
+					} else {
+						console.log(`engine is ${thisRacer.engine}`);
+					}
+				}
 				position++;
 				racer.style.left = position + 'px';
 			}
@@ -86,7 +100,6 @@ function finishRace(racer) {
 		finishedRacers.sort(function(a, b) {
 			const raceTimeA = a.finishTime - a.startTime;
 			const raceTimeB = b.finishTime - b.startTime;
-			console.log(raceTimeA);
 			return raceTimeA - raceTimeB;
 		});
 		displayRaceResults();
@@ -98,19 +111,23 @@ function displayRaceResults() {
 		const resultItem = document.createElement('tr');
 		const result = document.createElement('td');
 		const place = document.createElement('td');
-		const time = document.createElement('td');
-
+		const timeElement = document.createElement('td');
+		const time = (finishedRacers[i].finishTime - finishedRacers[i].startTime) / 1000;
 		result.innerText = finishedRacers[i].name;
 		place.innerText = i + 1;
-		time.innerText = finishedRacers[i].finishTime - finishedRacers[i].startTime;
+		timeElement.innerText = `${time} seconds`;
 		resultItem.append(place);
 		resultItem.append(result);
-		resultItem.append(time);
+		resultItem.append(timeElement);
 		resultsList.append(resultItem);
 	}
+
+	modal.classList.add('show-modal');
 }
 
 function reset() {
+	modal.classList.remove('show-modal');
+
 	while (track.firstChild) {
 		track.removeChild(track.lastChild);
 	}
@@ -128,3 +145,4 @@ createRacers(numberOfRacers);
 
 startButton.addEventListener('click', startRace);
 resetButton.addEventListener('click', reset);
+closeButton.addEventListener('click', reset);
