@@ -1,13 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Share:400,400i,700,700i&display=swap&subset=latin-ext");
 html {
-  width: 100vw;
-  height: 100vh;
   font-family: "Share", cursive;
 }
 
 body {
-  background-color: #fdfdfd;
   margin: 0;
+  background-color: #fdfdfd;
   overflow: hidden;
 }
 
@@ -25,31 +23,38 @@ body {
   display: grid;
   -ms-grid-rows: auto 1fr;
       grid-template-rows: auto 1fr;
+  width: 100vw;
+  height: 100vh;
 }
 
 header {
-  position: relative;
-  padding: 0 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   border-bottom: 1rem solid black;
-  background-size: 2rem 2rem;
   background-image: linear-gradient(45deg, black 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%);
-  background-position: 0 0, 2rem 0, 2rem -2rem, 0px 2rem;
+  background-position: 0 0, 1rem 0, 1rem -1rem, 0px 1rem;
+  background-size: 1rem 1rem;
 }
 
 #title-container {
   position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 #title-container h1 {
   position: relative;
-  display: inline-block;
-  left: -6rem;
-  -webkit-transform: skewX(-45deg);
-          transform: skewX(-45deg);
+  top: -6rem;
+  width: 8rem;
+  margin: 0 auto;
+  border: 0.25rem solid black;
   background-color: white;
   padding: 0.5rem 1rem;
-  border: 0.25rem solid black;
   font-style: italic;
+  -webkit-transform: scale(0);
+          transform: scale(0);
   -webkit-animation: slide-in 0.5s forwards;
           animation: slide-in 0.5s forwards;
   -webkit-animation-delay: 1s;
@@ -58,47 +63,72 @@ header {
 
 @-webkit-keyframes slide-in {
   100% {
-    left: 50%;
-    -webkit-transform: skewX(0);
-            transform: skewX(0);
+    top: 2.5rem;
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 @keyframes slide-in {
   100% {
-    left: 50%;
-    -webkit-transform: skewX(0);
-            transform: skewX(0);
+    top: 2.5rem;
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
 #controls {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  width: 9rem;
+  height: 9rem;
+  background-color: white;
+}
+
+#start-control {
+  position: relative;
+  top: -1.5rem;
+  left: 0rem;
+  width: 4rem;
+  height: 6rem;
+  margin: 0;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  -webkit-transform-origin: 0% 100%;
+          transform-origin: 0% 100%;
+  -webkit-transition: -webkit-transform 333ms ease-in-out;
+  transition: -webkit-transform 333ms ease-in-out;
+  transition: transform 333ms ease-in-out;
+  transition: transform 333ms ease-in-out, -webkit-transform 333ms ease-in-out;
+}
+
+#start-button {
+  position: relative;
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  border: 3px solid black;
+  background-color: white;
+  background-image: linear-gradient(45deg, black 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-position: 0 0, 1rem 0, 1rem -1rem, 0px 1rem;
+  background-size: 1rem 1rem;
+  padding: 0;
+}
+
+#start-button:hover {
+  cursor: pointer;
+}
+
+#start-button::after {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 0.1rem;
+  height: 5rem;
+  border: 3px solid black;
+  background-color: white;
+  content: "";
 }
 
 #race-track {
-  background-color: rgba(0, 0, 0, 0.205);
-  width: 100%;
-  height: 90vh;
-  padding: 1rem;
-}
-
-.racer {
-  position: relative;
-  margin: 2rem 0.5rem;
-  width: 6rem;
-  height: 1.5rem;
-  border: 1px solid black;
-  border-radius: 1rem;
-}
-
-.logo {
-  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -109,91 +139,23 @@ header {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  top: 0.25rem;
-  left: 2.5rem;
-  border: 1px solid black;
-  border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  font-size: 0.75rem;
-  color: white;
+  background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.205), rgba(0, 0, 0, 0.664));
+  padding: 1rem;
 }
 
-.front-wheels,
-.rear-wheels {
-  position: absolute;
-  top: 0.75rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background-color: black;
-}
-
-.front-wheels::after,
-.rear-wheels::after {
-  position: absolute;
-  content: "";
-  width: 0.5rem;
-  height: 0.5rem;
-  top: 0.45rem;
-  left: 0.45rem;
-  border: 1px dashed black;
-  border-radius: 50%;
-}
-
-.front-wheels::before,
-.rear-wheels::before {
-  position: absolute;
-  content: "";
-  height: 1rem;
-  width: 1rem;
-  top: 0.25rem;
-  left: 0.25rem;
-  border-radius: 50%;
-  background-color: white;
-}
-
-.front-wheels {
-  right: 0.5rem;
-}
-
-.rear-wheels {
-  right: 3.75rem;
-}
-
-.windshield {
-  position: absolute;
-  top: -1rem;
-  left: 3.5rem;
-  width: 1rem;
-  height: 1rem;
-  background-color: white;
-  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 100%);
-          clip-path: polygon(0 0, 0% 100%, 100% 100%);
-  border: 2px solid;
-}
-
-#start-button,
-#reset-button {
-  margin: 0 0.5rem 0.5rem;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border: 3px solid black;
-  background-color: white;
-}
-
-#start-button:hover,
-#reset-button:hover {
-  cursor: pointer;
+footer {
+  height: 4rem;
+  border-top: 1rem solid black;
+  background-image: linear-gradient(45deg, black 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-position: 0 0, 1rem 0, 1rem -1rem, 0px 1rem;
+  background-size: 1rem 1rem;
 }
 
 .modal {
   position: absolute;
+  top: -110%;
   width: 100%;
   height: 100%;
-  top: -100%;
   background-color: white;
   -webkit-transition: top 600ms;
   transition: top 600ms;
@@ -214,10 +176,10 @@ header {
 
 #button-container button {
   margin: 1rem;
-  font-size: 2rem;
   outline: none;
-  background-color: transparent;
   border: none;
+  background-color: transparent;
+  font-size: 2rem;
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -233,25 +195,27 @@ header {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  min-height: 100%;
 }
 
 #results-container table {
-  margin: 1rem;
   width: 100%;
   max-width: 50rem;
-  font-size: 1.5rem;
+  min-width: 40rem;
   border-collapse: collapse;
+  background-color: white;
+  font-size: 1.5rem;
 }
 
 #results-container table caption {
-  font-size: 1rem;
   margin: 1rem;
+  font-size: 1rem;
 }
 
 #results-container table thead {
   background-color: green;
-  color: white;
   font-size: 2rem;
+  color: white;
 }
 
 #results-container table thead tr {
@@ -264,12 +228,99 @@ header {
 }
 
 #results-container table tbody td {
-  padding: 1rem;
   border-bottom: 3px solid black;
+  padding: 1rem;
   text-align: center;
 }
 
 #results span {
   margin-right: 1rem;
+}
+
+.racer {
+  position: relative;
+  width: 6rem;
+  height: 1.5rem;
+  margin: 2rem 0.5rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+}
+
+.logo {
+  position: absolute;
+  top: 0.25rem;
+  left: 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.front-wheels,
+.rear-wheels {
+  position: absolute;
+  top: 0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.front-wheels::after,
+.rear-wheels::after {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px dashed black;
+  border-radius: 50%;
+  content: "";
+}
+
+.front-wheels::before,
+.rear-wheels::before {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: white;
+  content: "";
+}
+
+.front-wheels {
+  right: 0.5rem;
+}
+
+.rear-wheels {
+  right: 3.75rem;
+}
+
+.windshield {
+  position: absolute;
+  top: -1rem;
+  left: 3.5rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+  border: 2px solid;
+  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 100%);
+          clip-path: polygon(0 0, 0% 100%, 100% 100%);
 }
 /*# sourceMappingURL=style.css.map */

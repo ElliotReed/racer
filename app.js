@@ -1,4 +1,5 @@
 const track = document.getElementById('race-track');
+const startControl = document.getElementById('start-control')
 const startButton = document.getElementById('start-button');
 const trackWidth = track.offsetWidth;
 const trackPadding = parseFloat(window.getComputedStyle(track, null).getPropertyValue('padding-left')) * 2;
@@ -109,6 +110,7 @@ function createRacers(numberOfRacers) {
 }
 
 function startRace() {
+	startControl.style.transform = 'rotate(90deg)';
 	for (let i = 0; i < allRacers.length; i++) {
 		allRacers[i].startTime = Date.now();
 		allRacers[i].move();
@@ -147,6 +149,7 @@ function displayRaceResults() {
 }
 
 function reset() {
+	startControl.style.transform = 'rotate(45deg)';
 	modal.classList.remove('show-modal');
 
 	while (track.firstChild) {
